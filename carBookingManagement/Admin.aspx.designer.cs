@@ -11,7 +11,7 @@ namespace carBookingManagement
 {
 
 
-    public partial class login
+    public partial class Admin
     {
 
         /// <summary>

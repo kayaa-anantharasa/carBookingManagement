@@ -16,12 +16,18 @@ namespace carBookingManagement
 
         protected void login(object sender, EventArgs e)
         {
+            Session.Clear();
             Response.Redirect("login.aspx");
         }
 
-        protected void signup(object sender, EventArgs e)
+        protected void btnLogout_Click(object sender, EventArgs e)
         {
-            Response.Redirect("signup.aspx");
+           
+            Session.Clear();
+
+            Response.Redirect("~/login.aspx");
         }
+
+      
     }
     }

@@ -1,4 +1,4 @@
-﻿  <%@ Master Language="C#" AutoEventWireup="true" CodeBehind="index.master.cs" Inherits="carBookingManagement.index" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="index.master.cs" Inherits="carBookingManagement.index" %>
 
 <!DOCTYPE html>
 
@@ -15,177 +15,117 @@
         
     </asp:ContentPlaceHolder>
     <style>
-   nav {
-    overflow: hidden;
-    background-color: #219ebc;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        /* Styles for the footer */
+        footer {
+            background-color: #f8f9fa; /* Set background color */
+            padding: 20px 0; /* Add padding */
+            color: #6c757d; /* Set text color */
+        }
 
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
+        footer a {
+            color: #6c757d; /* Set link color */
+        }
 
-nav ul li {
-    margin-right: 10px; /* Add margin between menu items */
-}
-
-nav ul li a,.nav-link {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-nav ul li a:hover:not(.active),.nav-link:hover:not(.active){
-    background-color: #8ecae6;
-    color:white;
-}
-
-nav ul li.active {
-    background-color: #8ecae6;
-}
-
+        footer a:hover {
+            color: #212529; /* Set link color on hover */
+        }
     </style>
+    <style>
+    nav {
+        overflow: hidden;
+        background-color: #118ab2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+  
+    nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center; /* Align items vertically in the center */
+    }
+
+    nav ul.left-menu {
+        margin-right: auto; /* Pushes the left menu to the left */
+    }
+
+    nav ul li {
+        margin-right: 10px; /* Add margin between menu items */
+    }
+
+    nav ul li a,
+    .nav-link {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    nav ul li a:hover:not(.active),
+    .nav-link:hover:not(.active) {
+        background-color: #0c637f;
+        color: white;
+    }
+
+    nav ul li.active {
+        background-color: #a8dadc;
+    }
+</style>
+
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
-           <nav>
+            <nav>
     <ul class="left-menu">
-        <li><a href="homePage.aspx">Home</a></li>
-        <li><a href="#news">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-    </ul>
-      <ul class="right-menu">
-        <li><asp:LinkButton class="nav-link" ID="LinkButton1" runat="server" OnClick="login">Login</asp:LinkButton></li>
-        <li><asp:LinkButton class="nav-link" ID="LinkButton2" runat="server" OnClick="signup">Signup</asp:LinkButton></li>
-        <li><asp:LinkButton class="nav-link" ID="LinkButton3" runat="server">Hello User</asp:LinkButton></li>
+    <% if (Session["name"] != null) { %>
+        <% if (Session["role"] != null && Session["role"].ToString() == "admin") { %>
+            <ul>
+                 <li><a href="homePage.aspx">Home</a></li>
+                <li><a href="viewcar.aspx">View car</a></li>
+                <li><a href="addcar.aspx">Parking Area</a></li>
+            </ul>
+        <% } else { %>
+            <span style="color: white;">Hello <%= Session["name"].ToString() %></span><br />
+            <li><a href="homePage.aspx">Home</a></li>
+        <% } %>
+    <% } %>
+</ul>
+
+    <ul class="right-menu">
+        <% if (Session["name"] != null) { %>
+            <% if (Session["role"] != null && Session["role"].ToString() == "user") { %>
+                <li>
+                    <a href="addBooking.aspx">Add Booking</a>
+                </li>
+            <% } %>
+            <li>
+                <asp:Button class="logout" ID="btnLogout" runat="server" Text="Logout" OnClick="btnLogout_Click" />
+            </li>
+        <% } else { %>
+            <li>
+                <asp:LinkButton class="nav-link" ID="LinkButton1" runat="server" OnClick="login">Login</asp:LinkButton>
+            </li>
+        <% } %>
     </ul>
 </nav>
+
 
         </div>
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
-        <footer>
-            <!-- Footer -->
-<footer class="text-center text-lg-start bg-body-tertiary text-muted">
-  <!-- Section: Social media -->
-  <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-    <!-- Left -->
-    <div class="me-5 d-none d-lg-block">
-      <span>Get connected with us on social networks:</span>
-    </div>
-    <!-- Left -->
-
-    <!-- Right -->
-   <div>
-  <a href="#" class="me-4 text-reset">
-  <i class="fa-brands fa-facebook"></i>
-  </a>
-  <a href="#" class="me-4 text-reset">
-<i class="fa-brands fa-twitter"></i>
-  </a>
-  <a href="#" class="me-4 text-reset">
-      <i class="fa-brands fa-instagram"></i>
-  </a>
-</div>
-    <!-- Right -->
-  </section>
-  <!-- Section: Social media -->
-
-  <!-- Section: Links  -->
-  <section class="">
-    <div class="container text-center text-md-start mt-5">
-      <!-- Grid row -->
-      <div class="row mt-3">
-        <!-- Grid column -->
-        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-          <!-- Content -->
-          <h6 class="text-uppercase fw-bold mb-4">
-            <i class="fas fa-gem me-3"></i>Company name
-          </h6>
-          <p>
-            Here you can use rows and columns to organize your footer content. Lorem ipsum
-            dolor sit amet, consectetur adipisicing elit.
-          </p>
-        </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
-        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-          <!-- Links -->
-          <h6 class="text-uppercase fw-bold mb-4">
-            Our Services
-          </h6>
-          <p>
-            <a href="#!" class="text-reset">Angular</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">React</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">Vue</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">Laravel</a>
-          </p>
-        </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
-        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-          <!-- Links -->
-          <h6 class="text-uppercase fw-bold mb-4">
-            Useful links
-          </h6>
-          <p>
-            <a href="#!" class="text-reset">Home</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">About Us</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">Services</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">Contact Us</a>
-          </p>
-        </div>
-
-        <!-- Grid column -->
-        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-          <!-- Links -->
-          <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-          <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
-          <p>
-            <i class="fas fa-envelope me-3"></i>
-            info@example.com
-          </p>
-          <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
-          <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
-        </div>
-        <!-- Grid column -->
-      </div>
-      <!-- Grid row -->
-    </div>
-  </section>
-  <!-- Section: Links  -->
-
-  <!-- Copyright -->
-  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-  Copyright © 2024  Innovations (Pvt) Ltd. All Rights Reserved.
-  </div>
-  <!-- Copyright -->
-</footer>
-
+        <!-- Footer -->
+        <footer class="text-center text-lg-start bg-body-tertiary text-muted">
+            <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+                2024 University project All Rights Reserved.
+            </div>
+            <!-- Copyright -->
+        </footer>
     </form>
 </body>
 </html>
